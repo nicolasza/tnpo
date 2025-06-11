@@ -10,8 +10,6 @@ __pycache__/
 # Tests
 reports/
 
-# Model
-model/*.pt
 
 # Environment
 .env
