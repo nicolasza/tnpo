@@ -21,7 +21,7 @@ Esto es un proyecto base de deployment de infrastructura y contenedor, basado en
 
 # pasos para habilitar la infrastructura y primer run
 * crear containerregistry en google para proyecto (doc configContenedores.txt)
-* crear imagen docker Base con pt al  y realizar push manual
+* crear imagen docker Base con pt y realizar push manual
 * crear permisos necesarios de gcloud para la ejecucion de terraform (doc permisosTerraform.txt) 
     * * habilitar adicionalmnete api de identidad y control de acceso
     * * habilitar cloud run admin api
@@ -30,3 +30,5 @@ Esto es un proyecto base de deployment de infrastructura y contenedor, basado en
     * * terraform plan -out=tfplan
     * * terraform apply tfplan
 * crear permisos necesarios para push y deploy desde github actions (archivo permisosGithub.txt)
+    * *  es necesario agregar el pt en el repositorio para pruebas de funcionamiento(por lo menos uno basico)
+    terraform output -raw github_actions_key_json

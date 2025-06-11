@@ -1,5 +1,6 @@
 variable "project_id" {
-  default = "tnpo-462615"
+  type        = string
+  description = "ID del proyecto de GCP"
 }
 variable "region" {
   default = "us-central1"
