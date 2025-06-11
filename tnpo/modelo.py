@@ -25,6 +25,7 @@ class modelTnpo:
 
     
     def download_from_gcs(self):
+        """Descarga el modelo desde Google Cloud Storage (GCS) a la ruta local especificada."""
         from google.cloud import storage
         try:
             if self.gcs_uri.startswith("gs://"):

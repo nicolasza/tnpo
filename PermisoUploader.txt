@@ -1,5 +1,0 @@
-gcloud iam service-accounts create ml-model-uploader --description="Cuenta para subir modelos entrenados al bucket GCS" --display-name="ML Model Uploader" --project="tnpo-462615"
-
-gsutil iam ch serviceAccount:ml-model-uploader@tnpo-462615.iam.gserviceaccount.com:roles/storage.objectAdmin gs://modelos-mlflow
-
-gcloud iam service-accounts keys create model-uploader-key.json --iam-account=ml-model-uploader@tnpo-462615.iam.gserviceaccount.com

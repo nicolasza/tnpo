@@ -4,7 +4,7 @@ from typing import List
 import os
 from tnpo.modelo import modelTnpo
 
-# Pydantic models for request/response
+# Pydantic models para la respuesta y request
 class InferenceInput(BaseModel):
     input: List[int]
 

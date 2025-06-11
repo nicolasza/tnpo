@@ -1,3 +1,9 @@
+#login gcloud
+gcloud auth login
+
+#seteo de proyecto actual
+gcloud config set project "tnpo-462615"
+
 #activo servicio de google
 gcloud services enable artifactregistry.googleapis.com --project="tnpo-462615"
 
