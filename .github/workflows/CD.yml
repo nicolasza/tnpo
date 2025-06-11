@@ -1,9 +1,6 @@
 name: 'Continuous Deployment'
 
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["Continuous Integration"]
     types:
@@ -39,16 +36,14 @@ jobs:
         run: |
           gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
 
-      - name: Build and tag Docker image
-        run: |
-          docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:$GITHUB_SHA .
-          docker tag $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:$GITHUB_SHA \
-                     $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:latest
-
-      - name: Push Docker image
-        run: |
-          docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:$GITHUB_SHA
-          docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:latest
+      - name: Build and push 
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:$GITHUB_SHA
+            $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE_NAME:latest
 
   gcloud-upload:
     runs-on: ubuntu-latest
