@@ -1,0 +1,7 @@
+torch
+numpy
+fastapi
+uvicorn[standard]
+requests
+pytest
+httpx
