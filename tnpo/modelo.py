@@ -4,17 +4,41 @@ class modelTnpo:
 
 
     
-    def __init__(self, model_name, model_type, model_path):
+    def __init__(self, model_name):
         """Clase para manejar la carga y ejecución de modelos de PyTorch.
         Atributos:
             model_name (str): Nombre del modelo.
-            model_type (str): Tipo de modelo (ej. "torchscript").
-            model_path (str): Ruta al archivo del modelo.
-            model: Instancia del modelo cargado.
         """
+        import os
+
+        self.gcs_uri = os.getenv("MODEL_GCS", "gs://modelos-inferencia/exports/doubleit-model.pt")
+        self.model_path = os.getenv("MODEL_PATH", "./model/doubleit-model.pt")
         self.model_name = model_name
-        self.model_type = model_type
-        self.model_path = model_path
+        self.model = None
+
+        try:
+            self.download_from_gcs()
+        except Exception as e:
+            print(f"Error al descargar el modelo desde GCS: {e}")
+        
+
+
+    
+    def download_from_gcs(self):
+        from google.cloud import storage
+        try:
+            if self.gcs_uri.startswith("gs://"):
+                bucket_name, blob_name = self.gcs_uri[5:].split("/", 1)
+                client = storage.Client()
+                bucket = client.bucket(bucket_name)
+                blob = bucket.blob(blob_name)
+                blob.download_to_filename(self.model_path)
+                print(f"✅ Modelo descargado desde {self.gcs_uri}")
+            else:
+                raise ValueError("MODEL_GCS debe ser una ruta gs://")
+        except Exception as e:
+            print(f"Error al descargar el modelo desde GCS: {e}")
+            raise e
 
     def es_lista_de_enteros(self,arr):
         """Verifica si una lista contiene solo enteros.

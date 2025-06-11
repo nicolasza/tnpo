@@ -1,0 +1,21 @@
+gcloud auth login
+
+gcloud config set project tnpo-462615
+
+gcloud services enable run.googleapis.com --project="tnpo-462615"
+
+gcloud services enable iam.googleapis.com --project="tnpo-462615"
+
+gcloud iam service-accounts create terraform-deployer --project="tnpo-462615" --description="Permite a Terraform crear infraestructura en GCP" --display-name="Terraform Deployer"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:terraform-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/storage.admin" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:terraform-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/run.admin" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding tnpo-462615 --member="serviceAccount:terraform-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/artifactregistry.admin" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:terraform-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/iam.serviceAccountUser" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:terraform-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/iam.serviceAccountAdmin" --project="tnpo-462615"
+
+gcloud iam service-accounts keys create terraform-key.json  --iam-account="terraform-deployer@tnpo-462615.iam.gserviceaccount.com"  --project="tnpo-462615"

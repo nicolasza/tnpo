@@ -4,5 +4,9 @@ tests/
 .git/
 .github/
 requirements_dev.txt
+requirements_train.txt
 *.md
 *.pdf
+*.txt
+infra/
+workflows/

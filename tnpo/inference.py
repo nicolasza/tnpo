@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-import torch
 import os
 from tnpo.modelo import modelTnpo
 
@@ -13,17 +12,14 @@ class InferenceOutput(BaseModel):
     output: List[float]
 
 
-model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../model/", "doubleit-model.pt"))
-
 # instanciacion de modelo
-model = modelTnpo(model_name="DoubleItModel",
-              model_type="torchscript",
-              model_path=model_path)
-# carga de modelo
+model = modelTnpo(model_name="DoubleItModel")
 model.load_model()
 
 # Crear app FastAPI
 app = FastAPI(title="DoubleIt Model API")
+
+
 
 @app.get("/")
 async def home():
@@ -34,6 +30,7 @@ async def home():
         dict: Mensaje de estado.
     """
     return {"message": "Modelo TorchScript listo para inferencia."}
+
 
 @app.post("/infer", response_model=InferenceOutput)
 async def infer(data: InferenceInput):
@@ -54,6 +51,18 @@ async def infer(data: InferenceInput):
         return InferenceOutput(output=output_tensor.tolist())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/reload")
+def reload_model():
+    """Ruta para recargar el modelo desde GCS."""
+    try:
+        model.download_from_gcs()
+        model.load_model()
+        return {"message": "Modelo recargado exitosamente."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 
 if __name__ == "__main__":
     import uvicorn

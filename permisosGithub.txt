@@ -1,0 +1,9 @@
+gcloud iam service-accounts create github-actions-deployer --description="Cuenta para despliegues desde GitHub Actions" --display-name="GitHub Actions Deployer" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:github-actions-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/run.admin" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:github-actions-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/artifactregistry.writer" --project="tnpo-462615"
+
+gcloud projects add-iam-policy-binding "tnpo-462615" --member="serviceAccount:github-actions-deployer@tnpo-462615.iam.gserviceaccount.com" --role="roles/iam.serviceAccountUser" --project="tnpo-462615"
+
+gcloud iam service-accounts keys create gcp-sa-key.json --iam-account=github-actions-deployer@tnpo-462615.iam.gserviceaccount.com --project="tnpo-462615"

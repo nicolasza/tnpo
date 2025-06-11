@@ -15,3 +15,7 @@ model/*.pt
 
 # Environment
 .env
+
+#credentials
+terraform-key.json
+gcp-sa-key.json

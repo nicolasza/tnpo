@@ -1,0 +1,11 @@
+#activo servicio de google
+gcloud services enable artifactregistry.googleapis.com --project="tnpo-462615"
+
+#creo el repositorio
+gcloud artifacts repositories create ml-models --repository-format=docker --location=us-central1 --description="Repo de imágenes FastAPI modelo ML" --project="tnpo-462615"
+
+#configuracion de docker
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+#build
+docker build -t us-central1-docker.pkg.dev/tnpo-462615/ml-models/tnpo-api:latest .

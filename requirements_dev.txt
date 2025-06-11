@@ -5,3 +5,4 @@ uvicorn[standard]
 requests
 pytest
 httpx
+google-cloud-storage

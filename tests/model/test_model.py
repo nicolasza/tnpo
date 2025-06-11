@@ -7,9 +7,7 @@ import os
 
 class TestModel(unittest.TestCase):
     def setUp(self):
-        self.model = modelTnpo(model_name="DoubleItModel",
-                            model_type="torchscript",
-                            model_path='./model/doubleit-model.pt')
+        self.model = modelTnpo(model_name="DoubleItModel")
         self.model.load_model()
 
     def test_model_output(self):
