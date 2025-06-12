@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-import os
 from tnpo.modelo import modelTnpo
 
 # Pydantic models para la respuesta y request

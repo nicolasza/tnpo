@@ -26,9 +26,9 @@ Estos fueron los pasos que realice desde que recibi la prueba tecnica, esta secc
 
 * .github/workflows : contiene el workflow de github, con las pruebas "CI" y el deploy "CD".
 * infra: contiene la definicion de infrastructura de terraform
-* model: carpeta asociada al modelo, aqui debe ir el modelo a utilizar 
+* model: carpeta asociada al modelo, aqui debe ir el modelo a utilizar con nombre "doubleit-model.pt"
 * test: carpeta asociada a las pruebas del codigo
-* tnpo: carpeta de codigo principal
+* tnpo: carpeta de codigo principal, codigo de inicio "inference.py" de fastapi
 
 # Pasos para habilitar la infrastructura y primer deploy
 
@@ -101,3 +101,32 @@ Para probar el codigo se realizaron 2 funciones principales de test, una para el
 # Versionamiento de modelo
 Si bien no fue implementada una herramienta para el versionamiento de modelo y experimentos del mismo, este puede ser habilitado a traves de la misma infrastructura actual, solo actualizando el archivo .pt asociado al bucket y actualizando el modelo en produccion con el metodo de "reload" en la api, o en su defecto actualizando la variable de entorno "MODEL_GCS" la cual es la ruta al archivo en el bucket.
 
+
+# Enlace de codigo implementado
+
+https://inference-ml-model-468370556113.us-central1.run.app
+
+https://github.com/nicolasza/tnpo/
+
+# Endpoint habilitados
+
+- GET / 
+
+Muestra mensaje de inicio para verificar funcionamiento.
+
+- POST /infer 
+
+Realiza la inferencia del modelo asociado.
+
+Parametros:
+ >  
+ >  input: listado de numeros.
+ >
+Respuesta:
+>
+> listado de resultados de la prediccion.
+>
+
+- POST /reload
+
+Actualiza el modelo asociado al bucket de google cloud.
