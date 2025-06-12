@@ -6,7 +6,7 @@ __pycache__/
 .terraform/
 *.tfstate
 *.tfstate.*
-tfplan 
+infra/tfplan 
 
 # Tests
 reports/
